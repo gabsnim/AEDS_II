@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int agrc, char* agrv[])
+int main(int agrc, char *agrv[])
 {
 
     char *string1 = calloc(80, sizeof(char));
@@ -10,7 +10,6 @@ int main(int agrc, char* agrv[])
     int x = 0, y = 0;
     scanf("%s", string1);
     scanf("%s", string2);
-
 
     if (strlen(string1) > strlen(string2))
     {
@@ -38,7 +37,7 @@ int main(int agrc, char* agrv[])
     }
     else
     {
-        for(int i = 0; i < strlen(string1); i++)
+        for (int i = 0; i < strlen(string1); i++)
         {
             printf("%c%c", string1[i], string2[i]);
         }
