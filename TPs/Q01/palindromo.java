@@ -11,11 +11,12 @@ class palindromo
     */
     public static boolean isEnd (String str)
     {
+        boolean r = false;
         if(str.length() == 3 && str.charAt(0) == 'F' && str.charAt(1) == 'I' && str.charAt(2) == 'M')
         {
-            return true;
+            r = true;
         }
-        return false;
+        return r;
     }
 
     /*
