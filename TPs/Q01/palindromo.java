@@ -1,5 +1,6 @@
 /*
  * Gabriel Xavier Borges - 805347 - Q01
+ * Versao melhorada
  */
 
 class palindromo
@@ -28,12 +29,13 @@ class palindromo
     {
         int j = str.length() - 1;
         boolean resp = true;
-        for(int i = 0; i < str.length(); i++)
+        for(int i = 0; i < str.length()/2; i++)
         {
             //System.out.println(""+str.charAt(i) + str.charAt(j));
             if(str.charAt(i) != str.charAt(j))
             {
                 resp = false;
+                i = str.length()/2;
             }
             j--;
         }
@@ -46,7 +48,8 @@ class palindromo
     */
     public static void main (String[] agrs)
     {   
-        MyIO.setCharset("US-ASCII"); //setCharset pois o padrao nao identifica alguns caracteres
+        MyIO.setCharset("UTF-8"); //setCharset pois o padrao nao identifica alguns caracteres
+        //US-ASCII funciona
 
         String str;
         str = MyIO.readLine("");
