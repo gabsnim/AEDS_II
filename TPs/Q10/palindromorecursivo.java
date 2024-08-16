@@ -1,5 +1,5 @@
 /**
- * Gabriel Xavier Borges - 805347 - Q10 a
+ * Gabriel Xavier Borges - 805347 - Q10
  */
 
 public class palindromorecursivo
