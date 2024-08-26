@@ -1,5 +1,25 @@
 class algebrabooleana
-{
+{   
+    public static boolean isDigit(char c)
+    {
+        boolean r = false;
+        if(c >= '0' && c <= '9')
+        {
+            r = true;
+        }
+        return r;
+    }
+
+    public static boolean isOperador(char c)
+    {
+        boolean r = false;
+        if(c >= 'a' && c <= 'z')
+        {
+            r = true;
+        }
+        return r;
+    }
+
     public static char[] toArray (String str)
     {
         int n = str.length();
@@ -54,22 +74,83 @@ class algebrabooleana
 
     /* ===================================================== */
 
-    public static boolean NOT (char c)
+    public static char NOT (char c)
     {
-        boolean r = false;
-        if(c == 0)
+        if(c  == '0')
         {
-            r = true;
+            return '1';
         }
-        return r;
+        return '0';
+    }
+
+    public static char AND (char c, char z)
+    {
+        if(c == '1' && z == '1')
+        {
+            return '1';
+        }
+        return '0';
+    }
+
+    public static char OR (char c, char z)
+    {
+        if(c == '0' && z == '0')
+        {
+            return '0';
+        }
+        return '1';
+    }
+
+    public static char operador (char c, char z) //C = variavel && Z = operador
+    {
+        if(z == 't')
+        {
+            return NOT(c);
+        }
+        else if(z == 'd')
+        {
+            return AND(c, z);
+        }
+        else
+        {
+            return OR(c, z);
+        }
+    }
+
+    public static void operaracao (char[] pilha) //obs: mudar para char[] 
+    {
+        int n = pilha.length;
+        int count = 0;
+        int j = 0;
+        char[] pilhaorganizada = new char[n];
+        //System.out.println("xd"+n);
+        char c;
+        for(int i = n-1; i >= 0; i--)
+        {
+            if(isDigit(pilha[i]))
+            {
+                j = i;
+                while(j > 0)
+                {
+                    if(isOperador(pilha[j]))
+                    {
+                        pilhaorganizada[count] = operador(pilha[i], pilha[j]);
+                        count++;
+                        j = 0;
+                    }
+                    j--;
+                }
+            }
+        }
     }
 
     public static void main (String[] args)
     {
         //String line;
-        String teste = "3 0 0 0 and(or(A , B) , not(and(B , C)))";
+        String teste = "2 0 1 and(not(A) , not(B))";
         //line = MyIO.readLine();
         System.out.println(toArray(aux1(teste)));
+        System.out.println(""+operaracao(toArray(aux1(teste))));
 
     }
 }
