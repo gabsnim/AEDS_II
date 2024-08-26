@@ -1,8 +1,8 @@
 /**
- * Gabriel Xavier Borges - 805347 - Q03
+ * Gabriel Xavier Borges - 805347 - Q12
  */
 
-class ciframento
+class ciframentorec
 {
     /**
      * Funcao para verificar condicao de parada
@@ -20,18 +20,31 @@ class ciframento
     }
     
     /**
-     * Funcao para montar string Cifrada
-     * @param string
+     * Funcao recursiva para montar string Cifrada
+     * @param string, int
+     * @return string
      */
-    public static String cifra (String str)
+    public static String cifra (String str, int i)
     {
         String cifra = "";
-        for(int i = 0; i < str.length(); i++)
+        if(i < str.length())
         {
-            cifra = cifra + (char)(str.charAt(i) + 3);
+            cifra += (char)((str.charAt(i)) + 3);
+            cifra += cifra(str, i + 1);
         }
         return cifra;
     }
+
+    /**
+     * Funcao auxiliar para chamar funcao cifra(str, i);
+     * @param string
+     * @return string 
+     */
+    public static String cifra (String str)
+    {
+        return cifra(str, 0);
+    }
+
 
 
     /**

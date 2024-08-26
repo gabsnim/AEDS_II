@@ -1,9 +1,11 @@
-import java.util.*;
+/**
+ * Gabriel Xavier Borges - 805347 - Lab02
+ */
 
+import java.util.*;
 
 class sequencia
 {
-
     public static void print(int x, int y)
     {
         for(int i = x; i <= y; i++)
@@ -21,17 +23,21 @@ class sequencia
             }
             y--;
         }
+        System.out.println("");
     }
 
     public static void main(String[] args)
     {
-        Scanner scanner = new Scanner (System.in);
-        int x = 0, y = 0;
-        x = scanner.nextInt();
-        y = scanner.nextInt();
-        System.out.println("----------------");
-        print(x, y);
+        Scanner scan = new Scanner (System.in);
+        int x, y;
+        
+        while(scan.hasNextInt())
+        {
+            x = scan.nextInt();
+            y = scan.nextInt();
+            print(x, y);
+        }
+
+        scan.close();
     }
-
-
 }

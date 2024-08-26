@@ -27,12 +27,8 @@ public class alteracao
      * @param string
      * @return string modificada
      */
-    public static String alteracaoAleatoria(String str)
+    public static String alteracaoAleatoria(String str, char c, char z)
     {
-        Random gerador = new Random();
-        gerador.setSeed(4);
-        char c = (char)('a'+Math.abs(gerador.nextInt())%26);
-        char z = (char)('a'+Math.abs(gerador.nextInt())%26);
         //System.out.println(""+c +z);
 
         String nova = "";
@@ -52,6 +48,15 @@ public class alteracao
         return nova;
     }
 
+    public static String alteracaoAleatoria (String str)
+    {
+        Random gerador = new Random();
+        gerador.setSeed(4);
+        char c = (char)('a'+Math.abs(gerador.nextInt())%26);
+        char z = (char)('a'+Math.abs(gerador.nextInt())%26);
+        return alteracaoAleatoria(str, c, z);
+    }
+
     /** 
      * Funcao principal
      * @param args
@@ -59,7 +64,6 @@ public class alteracao
     public static void main (String[] args)
     {
         MyIO.setCharset("UTF-8");
-
         String str = MyIO.readLine();
         do
         {
