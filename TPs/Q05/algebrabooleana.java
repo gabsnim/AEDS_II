@@ -1,3 +1,5 @@
+
+
 class algebrabooleana
 {   
     public static boolean isDigit(char c)
@@ -10,7 +12,7 @@ class algebrabooleana
         return r;
     }
 
-    public static boolean isOperador(char c)
+    public static boolean isLetra(char c)
     {
         boolean r = false;
         if(c >= 'a' && c <= 'z')
@@ -101,56 +103,82 @@ class algebrabooleana
         return '1';
     }
 
-    public static char operador (char c, char z) //C = variavel && Z = operador
+    public static String onlyOperadores (char [] array)
     {
-        if(z == 't')
+        String str = "";
+
+        for(int i = 0; i < array.length; i++)
         {
-            return NOT(c);
+            if(isLetra(array[i]))
+            {
+                str += (char)(array[i]);
+            }
         }
-        else if(z == 'd')
-        {
-            return AND(c, z);
-        }
-        else
-        {
-            return OR(c, z);
-        }
+
+        return str;
     }
 
-    public static void operaracao (char[] pilha) //obs: mudar para char[] 
+    public static String onlyOperandos (char [] array)
     {
-        int n = pilha.length;
-        int count = 0;
-        int j = 0;
-        char[] pilhaorganizada = new char[n];
-        //System.out.println("xd"+n);
-        char c;
-        for(int i = n-1; i >= 0; i--)
+        String str = "";
+
+        for(int i = 0; i < array.length; i++)
         {
-            if(isDigit(pilha[i]))
+            if(isDigit(array[i]))
             {
-                j = i;
-                while(j > 0)
-                {
-                    if(isOperador(pilha[j]))
-                    {
-                        pilhaorganizada[count] = operador(pilha[i], pilha[j]);
-                        count++;
-                        j = 0;
-                    }
-                    j--;
-                }
+                str += (char)(array[i]);
             }
+        }
+
+        return str;
+    }
+
+    public static void operaracao (char[] operandos, char[] operadores) //obs: mudar para char[] 
+    {
+        char[] pilha = new char[operandos.length + operadores.length];
+        int x = 0;
+        
+        for(int i = operadores.length - 1, n = operandos.length -1; i >= 0 && n >= 0; i--, n--)
+        {
+            if(operadores[i] == 't')
+            {
+                pilha[x] = NOT(operandos[n]); 
+            }
+            else if(operadores[i] == 'd')
+            {
+                pilha[x] = AND(operandos[n], operandos[n-1]);
+            }
+            else if(operadores[i] == 'r')
+            {
+                pilha[x] = OR(operandos[n], operandos[n-1]);
+            }
+            x++;
+        }
+
+        for (char i : pilha) 
+        {
+            System.out.print(i);
         }
     }
 
     public static void main (String[] args)
     {
-        //String line;
-        String teste = "2 0 1 and(not(A) , not(B))";
-        //line = MyIO.readLine();
-        System.out.println(toArray(aux1(teste)));
-        System.out.println(""+operaracao(toArray(aux1(teste))));
+        String teste = aux1("2 0 0 and(not(A) , not(B))");
+        char[] array = toArray(teste);
+        
+        for (char i : array) 
+        {
+            System.out.print(i);
+        }
 
+        String operadores = onlyOperadores(array);
+        char[] operadoresarray = toArray(operadores); 
+        System.out.println("\n"+operadores);
+
+        String operandos = onlyOperandos(array);
+        char[] operandossarray = toArray(operandos); 
+        System.out.println("="+operandos);
+
+        operaracao(operandossarray, operadoresarray);
     }
 }
