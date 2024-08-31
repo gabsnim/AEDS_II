@@ -3,6 +3,18 @@
 class algebrabooleana
 {   
 
+    public static boolean isEnd(String str)
+    {
+        boolean r = false;
+
+        if(str.length() == 1 && str.charAt(0) == '0')
+        {
+            r = true;
+        } 
+
+        return r;
+    }
+
     /* ============================================================================== */
     /*                               AUXILIARES                                       */
 
@@ -26,160 +38,234 @@ class algebrabooleana
         return r;
     }
 
-    // public static char[] setValues (String str)
-    // {
-    //     int n = str.length();
-    //     char[] auxarray = new char[n];
-    //     int x = (int)(str.charAt(0) - 47);
-    //     char[] array = new char[n - x];
-
-
-    //     for(int i = 0; i < n; i++)
-    //     {
-    //        auxarray[i] = str.charAt(i);
-    //     }
-
-    //     for(int i = 0; i < auxarray.length; i++)
-    //     {
-    //         if(auxarray[i] == 'A')
-    //         {
-    //             auxarray[i] = auxarray[1];
-    //         }
-    //         else if(auxarray[i] == 'B')
-    //         {
-    //             auxarray[i] = auxarray[2];
-    //         }
-    //         else if(auxarray[i] == 'C')
-    //         {
-    //             auxarray[i] = auxarray[3];
-    //         }
-    //     }
-
-    //     for(int i = 0; i < array.length; i++)
-    //     {
-    //         array[i] = auxarray[i+x];
-    //     }
-
-    //     return array;
-    // }
-
-    public static char[] toArray (String str)
+    public static String setValues (String str)
     {
-        char [] array =  new char[str.length()];
+        String aux = "";
 
         for(int i = 0; i < str.length(); i++)
         {
-            array[i] = (char)(str.charAt(i));
-        }
-
-        return array;
-    }
-
-
-    public static String aux1 (String str) //remover espacos E digitos
-    {
-        String newstr = "";
-
-        for(int i = 0; i < str.length(); i++)
-        {
-            if(str.charAt(i) != ' ' && !isDigit(str.charAt(i)))
+            if(!isDigit(str.charAt(i)) && str.charAt(i) != ' ')
             {
-                newstr += (char)(str.charAt(i));
-            }
-        }
-        return newstr;
-    }
-
-    /* ============================================================================ */
-    /*                                 OPERADORES                                   */
-    public static char NOT (char c)
-    {
-        if(c  == '0')
-        {
-            return '1';
-        }
-        return '0';
-    }
-
-    public static char AND (char c, char z)
-    {
-        if(c == '1' && z == '1')
-        {
-            return '1';
-        }
-        return '0';
-    }
-
-    public static char OR (char c, char z)
-    {
-        if(c == '0' && z == '0')
-        {
-            return '0';
-        }
-        return '1';
-    }
-
-    /* =========================================================================== */
-
-    public static char[] onlyOperandos (String str)
-    {
-        int x = (int)(str.charAt(0) - 48);
-        char[] array = new char[x];
-
-        if(x > 2)
-        {
-            array[0] = str.charAt(2);
-            array[1] = str.charAt(4);
-            array[2] = str.charAt(6);
-        }
-        else
-        {
-            array[0] = str.charAt(2);
-            array[1] = str.charAt(4);
-        }
-
-        return array;
-    }
-
-    public static void operacao (String str, char[] array)
-    {
-        // System.out.println(""+str);
-        // for (char i : array)
-        // {
-        //     System.out.print(i);
-        // }
-        String newstr = "";
-
-        for(int i = str.length() - 1; i >= 0; i--)
-        {
-            if(str.charAt(i) == '(')
-            {
-                if(str.charAt(i-1) == 't')
+                if(str.charAt(i) == 'A')
                 {
-                    if(str.charAt(i+1) == 'A')
-                    {
-                        newstr += (char)(NOT(array[0]));
-                    }
-                    else if(str.charAt(i+1) == 'B')
-                    {
-                        newstr += (char)(NOT(array[1]));
-                    }
-                    else if(str.charAt(i+1) == 'C')
-                    {
-                        newstr += (char)(NOT(array[2]));
-                    }
+                    aux += (char)(str.charAt(2));
+                }
+                else if(str.charAt(i) == 'B')
+                {
+                    aux += (char)(str.charAt(4));
+                }
+                else if(str.charAt(i) == 'C')
+                {
+                    aux += (char)(str.charAt(6));
+                }
+                else
+                {
+                    aux += (char)(str.charAt(i));
                 }
             }
         }
 
-        System.out.println(""+newstr);
+        return aux;
     }
-    public static void main (String[] args)
-    {
-        String teste = "2 0 0 and(not(A) , not(B))";
-        char [] array = null;
-        array = onlyOperandos(teste);
 
-        operacao(aux1(teste), array);
+    public static char[] toArray (String str) //remover espacos E digitos
+    {
+        String aux = "";
+        for(int i = 0; i < str.length(); i++)
+        {
+            if(str.charAt(i) == 'd')
+            {
+                aux += (char)(str.charAt(i));
+            }
+            else if(str.charAt(i) == 't')
+            {
+                aux += (char)(str.charAt(i));
+            }
+            else if(str.charAt(i) == 'r')
+            {
+                aux += (char)(str.charAt(i));
+            }
+            else if(isDigit(str.charAt(i)))
+            {
+                aux += (char)(str.charAt(i));
+            }
+        }
+
+        char[] array = new char[aux.length()];
+
+        for(int i = 0; i < aux.length(); i++)
+        {
+            array[i] = (char)(aux.charAt(i));
+        }
+        return array;
+    }
+
+    /* ============================================================================ */
+    /*                                 OPERADORES                                   */
+    public static char[] NOT (char[] pilha, int i)
+    {
+        if(pilha[i+1] == '1')
+        {
+            pilha[i+1] = '*';
+            pilha[i] = '0';
+        }
+        else if(pilha[i+1] == '0')
+        {
+            pilha[i+1] = '*';
+            pilha[i] = '1';
+        }
+
+        for(int n = i + 1; n < pilha.length; n++)   //uma opcao e concatenar com string e retonar um toArray
+        {
+            if(!isDigit(pilha[n]))
+            {
+                pilha[n] = ' ';
+            }
+        }   
+        return pilha;
+    }
+
+    public static char[] AND (char[] pilha, int i)
+    {
+        for(int n = i; n < pilha.length; n++)
+        {
+            if(isDigit(pilha[n]))
+            {
+                for(int x = n+1; x < pilha.length; x++)
+                {
+                    if(isDigit(pilha[x]))
+                    {
+                        if(pilha[n] == '0' || pilha[x] == '0')
+                        {
+                            pilha[n] = '*';
+                            pilha[x] = '*';
+                            pilha[i] = '0';
+                        }
+                        else
+                        {
+                            pilha[n] = '*';
+                            pilha[x] = '*';
+                            pilha[i] = '1';
+                        }
+                        x = pilha.length;
+                    }
+                }
+                n = pilha.length;
+            }
+        }
+
+        for(int j = i+1; j < pilha.length; j++)
+        {
+            if(!isDigit(pilha[j]))
+            {
+                pilha[j] = ' ';
+            }
+        }
+        return pilha;
+    }
+
+    public static char[] OR (char[] pilha, int i)
+    {
+        for(int n = i; n < pilha.length; n++)
+        {
+            if(isDigit(pilha[n]))
+            {
+                for(int x = n+1; x < pilha.length; x++)
+                {
+                    if(isDigit(pilha[x]))
+                    {
+                        if(pilha[n] == '1' || pilha[x] == '1')
+                        {
+                            pilha[n] = '*';
+                            pilha[x] = '*';
+                            pilha[i] = '1';
+                        }
+                        else
+                        {
+                            pilha[n] = '*';
+                            pilha[x] = '*';
+                            pilha[i] = '0';
+                        }
+                        x = pilha.length;
+                    }
+                }
+                n = pilha.length;
+            }
+        }
+
+        for(int j = i+1; j < pilha.length; j++)
+        {
+            if(!isDigit(pilha[j]))
+            {
+                pilha[j] = ' ';
+            }
+        }
+
+        return pilha;
+    }
+
+    /* =========================================================================== */
+
+    public static void operacao (char[] pilha)
+    {
+
+        // for(char c: pilha)
+        // {
+        //     System.out.print(""+c);
+        // }
+        // System.out.println("");
+
+        for(int i = pilha.length - 1; i >= 0; i--)
+        {
+            if(pilha[i] == 't')
+            {
+                pilha = NOT(pilha, i);
+                // for(char c: pilha)
+                // {
+                //     System.out.print(""+c);
+                // }
+                // System.out.println("");
+            }
+            else if(pilha[i] == 'd')
+            {
+                pilha = AND(pilha, i);
+                // for(char c: pilha)
+                // {
+                //     System.out.print(""+c);
+                // }
+                // System.out.println("");
+            }
+            else if(pilha[i] == 'r')
+            {
+                pilha = OR(pilha, i);
+                // for(char c: pilha)
+                // {
+                //     System.out.print(""+c);
+                // }
+                // System.out.println("");
+            }
+        }
+
+        System.out.println(""+pilha[0]);
+    }
+
+    public static void main (String[] args) //objetivo: tratar tudo como array an0n0
+    {
+    
+        //System.out.println(""+aux);
+        String str;
+        // str = MyIO.readLine();
+        // String aux = setValues(str);
+        char[] array = null;
+        // array = toArray(aux);
+        // operacao(array);
+
+        for(int i = 1; i <= 104; i++)
+        {
+            str = MyIO.readLine();
+            String aux = setValues(str);
+            array = toArray(aux);
+            operacao(array);
+        }
     }
 }
