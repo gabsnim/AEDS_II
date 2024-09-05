@@ -3,6 +3,7 @@
  * Versao melhorada
  */
 
+
 class palindromo
 {   
     /*
