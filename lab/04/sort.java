@@ -1,72 +1,116 @@
+/**
+ * Gabriel Xavier Borges - 805347 - LAB04
+ */
+
 class sort
 {
-
-    public static boolean isPar (int x)
+    /**
+     * Funcao auxiliar para saber se numero e impar
+     * @param int x
+     * @return boolean
+     */
+    public static boolean isImpar (int x)
     {
-        boolean r = true;
+        boolean r = false;
         if(x % 2 != 0)
         {
-            r = false;
+            r = true;
         }
         return r;
     }
 
-    public static int[] swap (int[] array, int i, int j)
+    /**
+     * Ordenar com o algortimo insercao mas usando as restricoes;
+     * @param array, int m
+     * @return array ordenado 
+     */
+    public static int[] ordenar (int[] array, int m)
     {
-        int tmp = array[i];
-        array[i] = array[j];
-        array[j] = tmp;
-        return array;
-    }
-
-    public static int[] sort (int n, int m, int array[])
-    {
-
-        for(int i = 0; i < n - 1; i++)
+        for (int i = 1; i < array.length; i++)
         {
-            int menor = i;
+            int aux = array[i];
+            int j = i - 1;
 
-            for(int j = (i + 1); j < n; j++)
+            while (j >= 0 && cmp(array[j], aux, m))
             {
-                if(array[menor] % m > array[j] % m)
-                {
-                    if(array[menor] % m == array[j] % m)
-                    {
-                        
-                    }
-                    menor = j;
-                }
+                array[j+1] = array[j];
+                j--;
             }
-            array = swap(array, menor, i);
+
+            array[j+1] = aux;
         }
         return array;
     }
 
-    public static void main (String[] args)
+    /**
+     * Funcao auxiliar para ajudar a ordenacao de acordo com enunciado
+     * @param int x, int y, int m
+     * @return boolean
+     */
+    public static boolean cmp (int x, int y, int m)
     {
-        int n;
-        int m;
+        int modx = x % m;
+        int mody = y % m;
 
-        n = MyIO.readInt();
-        m = MyIO.readInt();
-
-        int[] array = new int[n];
-
-        for(int i = 0; i < n; i++)
+        if(modx != mody)
         {
-            array[i] = MyIO.readInt();
+            return modx > mody;
         }
 
-        for(int i = 0; i < n; i++)
+        if (isImpar(x) && !isImpar(y))
         {
-            System.out.print(" "+   array[i]);
+            return false; 
         }
-        System.out.println("");
-        array = sort(n,m,array);
+        if (!isImpar(x) && isImpar(y))
+        {
+            return true; 
+        }
 
-        for(int i = 0; i < n; i++)
+        if (isImpar(x) && isImpar(y))
         {
-            System.out.print(" "+   array[i]);
+            return x < y;
         }
+
+        return x > y;
     }
-}   
+
+    /**
+     * Funcao principal
+     * @param String[] args
+     */
+    public static void main(String[] args)
+    {
+        int n = MyIO.readInt();
+        int m = MyIO.readInt();
+
+        do
+        {
+
+            int [] array = new int [n];
+
+            for(int i = 0; i < n; i++)
+            {
+                array[i] = MyIO.readInt();
+            }    
+
+            array = ordenar(array, m);
+
+            System.out.println(n + " " + m);
+
+            for(int x : array)
+            {
+                System.out.println(x);
+            }
+
+            n = MyIO.readInt();
+            m = MyIO.readInt();
+
+            if(n == 0 && m == 0)
+            {
+                System.out.print(n + " " + m);
+            }
+
+        }while(n != 0 && m != 0);
+
+    }
+}

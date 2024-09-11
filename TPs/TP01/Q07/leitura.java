@@ -90,22 +90,61 @@ class leitura
      */
     public static int[] countVogais(String str)
     {
-        String aux = "aeiouáéíóúàèìòùãõâêîôû";
-        int[] count = new int[aux.length()];
-        char c;
-        int n;
+        int valores[] = new int[26];
 
-        for(int i = 0; i < str.length(); i++)
-        {
-            c = str.charAt(i);
-            n = aux.indexOf(c);
-            if(n != -1)
-            {
-                count[n]++;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '\u0061') {
+                valores[0] = valores[0] + 1;
+            } else if (str.charAt(i) == '\u0065') {
+                valores[1] = valores[1] + 1;
+            } else if (str.charAt(i) == '\u0069') {
+                valores[2] = valores[2] + 1;
+            } else if (str.charAt(i) == '\u006F') {
+                valores[3] = valores[3] + 1;
+            } else if (str.charAt(i) == '\u0075') {
+                valores[4] = valores[4] + 1;
+            } else if (str.charAt(i) == '\u00E1') {
+                valores[5] = valores[5] + 1;
+            } else if (str.charAt(i) == '\u00E9') {
+                valores[6] = valores[6] + 1;
+            } else if (str.charAt(i) == '\u00ED') {
+                valores[7] = valores[7] + 1;
+            } else if (str.charAt(i) == '\u00F3') {
+                valores[8] = valores[8] + 1;
+            } else if (str.charAt(i) == '\u00FA') {
+                valores[9] = valores[9] + 1;
+            } else if (str.charAt(i) == '\u00E0') {
+                valores[10] = valores[10] + 1;
+            } else if (str.charAt(i) == '\u00E8') {
+                valores[11] = valores[11] + 1;
+            } else if (str.charAt(i) == '\u00EC') {
+                valores[12] = valores[12] + 1;
+            } else if (str.charAt(i) == '\u00F2') {
+                valores[13] = valores[13] + 1;
+            } else if (str.charAt(i) == '\u00F9') {
+                valores[14] = valores[14] + 1;
+            } else if (str.charAt(i) == '\u00E3') {
+                valores[15] = valores[15] + 1;
+            } else if (str.charAt(i) == '\u00F5') {
+                valores[16] = valores[16] + 1;
+            } else if (str.charAt(i) == '\u00E2') {
+                valores[17] = valores[17] + 1;
+            } else if (str.charAt(i) == '\u00EA') {
+                valores[18] = valores[18] + 1;
+            } else if (str.charAt(i) == '\u00EE') {
+                valores[19] = valores[19] + 1;
+            } else if (str.charAt(i) == '\u00F4') {
+                valores[20] = valores[20] + 1;
+            } else if (str.charAt(i) == '\u00FB') {
+                valores[21] = valores[21] + 1;
+            } else if (str.charAt(i) >= 97 && str.charAt(i) <= 122 && str.charAt(i) != '\u0061'
+                    && str.charAt(i) != '\u0065'
+                    && str.charAt(i) != '\u0069' && str.charAt(i) != '\u006F' && str.charAt(i) != '\u0075') {
+                valores[22] = valores[22] + 1;
             }
 
         }
-        return count;
+        return valores;
     }
 
 
@@ -151,6 +190,16 @@ class leitura
 		return resp.toString();
 	}
 
+    public static char[] setarEspeciais ()
+    {
+        char[] array = {
+            (char) 225, (char) 233, (char) 237, (char) 243, (char) 250, 
+            (char) 224, (char) 232, (char) 236, (char) 242, (char) 249, 
+            (char) 227, (char) 245, (char) 226, (char) 234, (char) 238, 
+            (char) 244, (char) 251
+        };
+        return array;
+    }
 
     /**
      * Funcao principal
@@ -161,6 +210,9 @@ class leitura
         //<clean html?>
         
         MyIO.setCharset("UTF-8");
+        
+        char[] array = setarEspeciais();
+
 		String endereco, nome;
 
        // nome = MyIO.readLine();
@@ -186,23 +238,23 @@ class leitura
                 System.out.printf("i(%s) ", vogais[2]);
                 System.out.printf("o(%s) ", vogais[3]);
                 System.out.printf("u(%s) ", vogais[4]);
-                System.out.printf("%s(%s) ", (char)225, vogais[5]); //setar caracteres especiais 
-                System.out.printf("%s(%s) ", (char)233, vogais[6]);
-                System.out.printf("%s(%s) ", (char)237, vogais[7]);
-                System.out.printf("%s(%s) ", (char)243, vogais[8]);
-                System.out.printf("%s(%s) ", (char)250, vogais[9]);
-                System.out.printf("%s(%s) ", (char)224, vogais[10]);
-                System.out.printf("%s(%s) ", (char)232, vogais[11]);
-                System.out.printf("%s(%s) ", (char)236, vogais[12]);
-                System.out.printf("%s(%s) ", (char)242, vogais[13]);
-                System.out.printf("%s(%s) ", (char)249, vogais[14]);
-                System.out.printf("%s(%s) ", (char)227, vogais[15]);
-                System.out.printf("%s(%s) ", (char)245, vogais[16]);
-                System.out.printf("%s(%s) ", (char)226, vogais[17]);
-                System.out.printf("%s(%s) ", (char)234, vogais[18]);
-                System.out.printf("%s(%s) ", (char)238, vogais[19]);
-                System.out.printf("%s(%s) ", (char)244, vogais[20]);
-                System.out.printf("%s(%s) ", (char)251, vogais[21]);
+                System.out.printf("%c(%s) ",array[0] , vogais[5]); //setar caracteres especiais 
+                System.out.printf("%c(%s) ",array[1] , vogais[6]);
+                System.out.printf("%c(%s) ",array[2] , vogais[7]);
+                System.out.printf("%c(%s) ",array[3], vogais[8]);
+                System.out.printf("%c(%s) ",array[4], vogais[9]);
+                System.out.printf("%c(%s) ",array[5], vogais[10]);
+                System.out.printf("%c(%s) ",array[6], vogais[11]);
+                System.out.printf("%c(%s) ",array[7], vogais[12]);
+                System.out.printf("%c(%s) ",array[8], vogais[13]);
+                System.out.printf("%c(%s) ",array[9], vogais[14]);
+                System.out.printf("%c(%s) ",array[10], vogais[15]);
+                System.out.printf("%c(%s) ",array[11], vogais[16]);
+                System.out.printf("%c(%s) ",array[12], vogais[17]);
+                System.out.printf("%c(%s) ",array[13], vogais[18]);
+                System.out.printf("%c(%s) ",array[14], vogais[19]);
+                System.out.printf("%c(%s) ",array[15], vogais[20]);
+                System.out.printf("%c(%s) ",array[16], vogais[21]);
                 consoantes = consoantes - ((2*countbr) + 3*counttable);
                 System.out.printf("consoante(%s) ", consoantes);
                 System.out.printf("<br>(%s) ", countbr);
