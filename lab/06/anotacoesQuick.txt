@@ -1,0 +1,146 @@
+Gabriel Xavier Borges - 805347
+Lab06
+
+Quick Sort Algoritm
+
+Análise do algoritmo QuickSort com variações.
+
+Array Ordenado
+
+QuickSort com o pivô sendo o primeiro elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos = 149904 nanosegundos
+
+1000 elementos = 5539710 nanosegundos
+
+10000 elementos = 32535203 nanosegundos
+
+
+QuickSort com pivô sendo o último elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos = 142232 nanosegundos
+
+1000 elementos = 5510321 nanosegundos
+
+10000 elementos = 36534768 nanosegundos
+
+
+QuickSort com pivô sendo aleatório 
+
+tempo médio de execução (5 testes)
+
+100 elementos =  892291 nanosegundos
+
+1000 elementos = 2185352 nanosegundos
+
+10000 elementos = 5877964 nanosegundos
+
+QuickSort com pivô sendo a mediana de três elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos =  46377 nanosegundos
+
+1000 elementos = 628213 nanosegundos
+
+10000 elementos = 2323192 nanosegundos
+
+--------------------------------------------------------------------------------------------
+
+
+Array quase ordenado
+
+QuickSort com o pivô sendo o primeiro elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos = 87170 nanosegundos
+
+1000 elementos = 1097566 nanosegundos
+
+10000 elementos = 3795248 nanosegundos
+
+
+QuickSort com pivô sendo o último elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos = 81195 nanosegundos
+
+1000 elementos = 1301252 nanosegundos
+
+10000 elementos = 6103187 nanosegundos
+
+
+QuickSort com pivô sendo aleatório 
+
+tempo médio de execução (5 testes)
+
+100 elementos =  366963 nanosegundos
+
+1000 elementos = 1406719 nanosegundos
+
+10000 elementos = 3738355 nanosegundos
+
+QuickSort com pivô sendo a mediana de três elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos =  61753 nanosegundos
+
+1000 elementos = 801867 nanosegundos
+
+10000 elementos = 2681754 nanosegundos
+
+
+-----------------------------------------------------------------------------
+
+
+Array aleatório
+
+QuickSort com o pivô sendo o primeiro elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos = 95508  nanosegundos
+
+1000 elementos = 1018576 nanosegundos
+
+10000 elementos = 2956911 nanosegundos
+
+
+QuickSort com pivô sendo o último elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos = 83296 nanosegundos
+
+1000 elementos = 1075959 nanosegundos
+
+10000 elementos = 2717018 nanosegundos
+
+
+QuickSort com pivô sendo aleatório 
+
+tempo médio de execução (5 testes)
+
+100 elementos =  416004 nanosegundos
+
+1000 elementos = 1566801 nanosegundos
+
+10000 elementos = 3563860 nanosegundos
+
+QuickSort com pivô sendo a mediana de três elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos =  82792 nanosegundos
+
+1000 elementos = 1088974 nanosegundos
+
+10000 elementos = 2879632 nanosegundos
+
