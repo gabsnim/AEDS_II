@@ -1,0 +1,26 @@
+Gabriel Xavier Borges - 805347 
+Lab 06
+
+Quick Sort Algoritm 
+
+Análise do algoritmo QuickSort com variações.
+
+
+Array Ordenado 
+
+QuickSort com o pivô sendo o primeiro elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos = 149904 nanosegundos
+
+1000 elementos = 5539710 nanosegundos
+
+10000 elementos = 32535203 nanosegundos
+
+
+QuickSort com pivô sendo o último elemento
+
+tempo médio de execução (5 testes)
+
+100 elementos

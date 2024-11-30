@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import java.text.ParseException;
+import java.time.Duration;
+import java.time.Instant;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 class Pokemon
 {
@@ -110,8 +114,8 @@ class Pokemon
      */
     public static String readCsv ()
     {
-        //String filePath = "/tmp/pokemon.csv"; //caminho verde
-        String filePath = "/home/gabs/faculdade/AEDS_II/TPs/TP02/pokemon.csv";
+        String filePath = "/tmp/pokemon.csv"; //caminho verde
+        //String filePath = "/home/gabs/faculdade/AEDS_II/TPs/TP02/pokemon.csv";
         String linha;
         StringBuilder csv = new StringBuilder();
 
@@ -329,39 +333,115 @@ class Pokemon
     }
 
 }
+class log
+{
+    private Instant start;
+    private Instant end;
+    private int comps;
+    private int movs;
 
+    log()
+    {
+        this.start = Instant.now(); 
+        this.comps = 0; 
+        this.movs = 0; 
+    }
+
+    public void comp()
+    {
+        this.comps++;
+    }
+
+    public void move()
+    {
+        this.movs++;
+    }
+
+
+    public void end()
+    {
+        this.end = Instant.now();
+    }
+
+
+    public double diff()
+    {
+        return Duration.between(this.start, this.end).toNanos() / 1_000_000_000.0;
+    }
+
+
+    public void print(String fileName) throws Exception 
+    {
+        try (PrintWriter write = new PrintWriter(new FileWriter(fileName)))
+        {
+            write.printf("Matrícula: 805347\t"); 
+            write.printf("Tempo de execução: %.3f\t", diff()); 
+            write.printf("Comparações: %d\t", comps);
+            write.printf("Movimentações: %d", movs);
+        }
+    }
+}
 class pesquisasequencial extends Pokemon
 {   
 
-    public ArrayList<Pokemon> Q01 (Pokemon [] pokemons, int id)
+    public static void Q03 (ArrayList<Pokemon> array, Scanner scan, log logger)
     {
-        ArrayList<Pokemon> lista = new ArrayList<>();
-
-        lista.add(pokemons[id - 1]);
-
-        return lista;
-    }
-
-    public static boolean isEnd(String str)
-    {
-        boolean r = false;
-        if(str.length() == 3 && str.charAt(0) == 'F' && str.charAt(1) == 'I' && str.charAt(2) == 'M')
+        String name = scan.nextLine();
+        String comper;
+        Boolean r;
+        do  
         {
-            r = true;
-        }
-        return r;
+            r = false;
+            for(int i = 0; i < array.size(); i++)
+            {
+                comper = array.get(i).getName();
+                logger.comp();
+                if(comper.equals(name))
+                {
+                    r = true;
+                    i = array.size();
+                }
+            }
+
+            if(r)
+            {
+                System.out.println("SIM");
+            }
+            else
+            {
+                System.out.println("NAO");
+            }
+
+            name = scan.nextLine();
+        }while(!name.equals("FIM"));
+        
     }
 
-    public static void main (String[] args)
+    public static void main (String[] args) throws Exception
     {
-        String a = readCsv();   
-        Pokemon[] pokemons = Pokemon.setPokemons(a);                                
-        Pokemon p = new Pokemon();                                                  
+        
 
-        ArrayList<Pokemon>  array = new ArrayList<>();
+        String a = readCsv();   
+        Pokemon[] pokemons = Pokemon.setPokemons(a);                                                                                  
+
+        ArrayList<Pokemon> array = new ArrayList<>();
 
         Scanner scan = new Scanner(System.in);
 
         String id = scan.nextLine();
+
+        do
+        {
+            array.add(pokemons[Integer.parseInt(id) - 1]);
+            id = scan.nextLine();
+        }while(!id.equals("FIM"));
+
+        log logger = new log();
+        Q03(array, scan, logger);
+
+        logger.end();
+        logger.print("805347_sequencial.txt");
+
+        scan.close();
     }
 }

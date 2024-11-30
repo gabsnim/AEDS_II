@@ -1,18 +1,15 @@
-/**
- * Gabriel Xavier Borges - 805347
- * Q01 - TP02
- */
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define MAX_SIZE 5 //fila circular
 #define MAX_POKEMONS 801
 #define MAX_ABILITIES 8
 #define MAX_TYPES 2
-#define CAMINHO_PC "/home/gabs/faculdade/AEDS_II/TPs/TP02/pokemon.csv"
+#define CAMINHO_PC "/home/gabs/faculdade/AEDS_II/pokemon.csv"
 #define CAMINHO_VERDE "/tmp/pokemon.csv"
+#define null NULL;
 
 typedef struct Pokemon
 {
@@ -250,6 +247,25 @@ void toString(pokeref p, char *result)
     strcat(result, "\n");
 }
 
+void printPokemon(pokeref p)
+{
+    char* abilities = printAbilities(p);
+    char* types = printTypes(p);
+    printf("[#%d -> %s: %s - [%s] - [%s] - %.1fkg - %.1fm - %d%c - %s - %d gen] - %s\n",
+            p->id, 
+            p->name, 
+            p->description, 
+            types,
+            abilities,
+            p->weight, 
+            p->height, 
+            p->captureRate,
+            '%', 
+            p->isLegendary ? "true" : "false", 
+            p->generation,
+            p->captureDate);
+}
+
 void formatAndSetAbilities(char *abilitiesStr, pokeref p)
 {
     char* start = strchr(abilitiesStr, '[');  
@@ -406,45 +422,239 @@ void readCsv (char* fileName, pokeref* p)
     fclose(arquivo);
 }
 
+int n = 0;
 
-
-int main(int argc, char* argv[])
+typedef struct Node
 {
-    pokeref *pokemons = malloc(MAX_POKEMONS * sizeof(pokeref));
+    pokeref data;
+    struct Node* next;
+}Node;
+
+Node* newNode(pokeref pokemon)
+{
+    Node* new = (Node*)malloc(sizeof(Node));
+    new->data = pokemon;
+    new->next = null;
+    return new;
+}
+
+Node* first;
+Node* last;
+
+void start(pokeref pokemon)
+{
+    first = newNode(pokemon);
+    last = first;
+}
+
+int tamanho() 
+{
+    int tamanho = 0;
+    Node* i;
+    for(i = first; i != last; i = i->next, tamanho++);
+    return tamanho;
+}
+pokeref removerInicio()
+{
+    if (first == last) 
+    { 
+        printf("ERRO: Lista vazia!\n");
+    }
+
+    Node* tmp = first;
+    pokeref resp = first->data;
+    first = first->next;
+    tmp->next = NULL;
+    tmp = null;
+    free(tmp); 
+    n--;
+    // printf("(R) %s\n", resp->name);
+    return resp;
+}
+void inserirInicio (pokeref pokemon)
+{
+    Node* tmp = newNode(pokemon);
+    tmp->next = first;
+    first = tmp;
+}
+
+void inserirFim(pokeref pokemon)
+{
+    Node* tmp = newNode(pokemon); 
+    if(n > 5)
+    {
+        removerInicio();
+    }
+    if(first == NULL)
+    {
+        first = tmp;
+    }
+
+    last->next = tmp;
+    last = last->next;
+    n++;
+}
+
+void inserir(pokeref pokemon, int pos) 
+{
+    pos--;
+    int tam = tamanho();
+
+    if(pos<0 || pos>tam)
+    {
+        printf("ERRO");
+    }
+    else if(pos == 0)
+    {
+        inserirInicio(pokemon);
+    }
+    else if(pos == tam)
+    {
+        inserirFim(pokemon);
+    }
+    else
+    {
+        int j;
+        Node* i = first;
+        for(j = 0; j < pos; j++, i = i->next);
+
+        Node* tmp = newNode(pokemon);
+        tmp->next = i->next;
+        i->next = tmp;
+        tmp = i = NULL;
+    }
+}
+pokeref removerFim() 
+{
+    if (first == last)
+    {  
+        printf("ERRO: Lista vazia!\n");
+    }
+
+    Node* i;
+    for(i = first; i->next != last; i = i->next);
+
+    pokeref resp = last->data;
+    last = i;
+    free(last->next);
+    i = last->next = null;
+    // printf("(R) %s\n", resp->name);
+    return resp;
+}
+
+pokeref remover(int pos)
+{
+    pos--;
+    pokeref resp;
+
+    int tam = tamanho();
+
+    if(first == last)
+    {
+        printf("ERRO");
+    }
+    else if(pos < 0 || pos >= tam)
+    {
+        printf("ERRO");
+    }
+    else if(pos == 0)
+    {
+        resp = removerInicio();
+    }
+    else if(pos == tam - 1)
+    {
+        resp = removerFim();
+    }
+    else
+    {
+        Node* i = first;
+        int j;
+        for(j = 0; j < pos; j++, i = i->next);
+
+        Node* tmp = i->next;
+        resp = tmp->data;
+        i->next = tmp->next;
+        tmp->next = null;
+        free(tmp);
+        i = tmp = null;
+    }
+    return resp;
+}
+
+int main (int argc, char** argv)
+{
+    pokeref* pokemons = malloc(MAX_POKEMONS * sizeof(pokeref));
+    pokeref* array = malloc(MAX_POKEMONS * sizeof(pokeref));
 
     for (int i = 0; i < MAX_POKEMONS; i++)
     {
         pokemons[i] = init();
     }
 
-    //readCsv(CAMINHO_PC, pokemons);
-    readCsv(CAMINHO_VERDE, pokemons);
+    readCsv(CAMINHO_PC, pokemons);
+    // readCsv(CAMINHO_VERDE, pokemons);
 
-    //🖣 Q01 
 
-    char* entrada = malloc(80 * sizeof(char));
+    char* buffer = malloc(80 * sizeof(char));
+    scanf("%s", buffer);
 
-    char print [1024];
+    start(pokemons[777]);
+    int x = atoi(buffer);
+    inserirFim(pokemons[x-1]);
+    removerInicio();
 
-    scanf("%s", entrada);
-    int x = 0;
 
-    do
+    do 
     {
-        x = atoi(entrada);
-        toString(pokemons[x-1], print);
-        printf("%s", print);
-        scanf("%s", entrada);
+        int x = atoi(buffer);
+        inserirFim(pokemons[x-1]);
+        scanf("%s", buffer);
+        n++;
+    }while (strcmp(buffer, "FIM") != 0);
 
-    }while(strcmp(entrada, "FIM")!= 0);
+    int y = 0;
+    scanf("%d", &y);
+    getchar();
 
-    //🖢 Q01 ^
+    removerInicio();
+
+    char action[1024];
+    pokeref tmp;
+    for (int i = 0; i < y; i++)
+    {
+        scanf(" %[^\n]", action);
+        char* args[3];
+        args[0] = strtok(action, " ");
+        args[1] = strtok(NULL, " ");
+        args[2] = strtok(NULL, " ");
+
+        if (strcmp(args[0], "I") == 0)
+        {
+            tmp = pokemons[atoi(args[1]) - 1];
+            inserirFim(tmp);
+        } 
+        else if(strcmp(args[0], "R") == 0)
+        {
+            printf("(R) %s\n", removerInicio()->name);
+        }
+    }
+
+    Node* i = first;
+
+    int j = 0;
+    while (i != NULL)
+    {
+        printf("[%d] ", j);
+        printPokemon(i->data);
+        i = i->next;
+        j++;
+    }
 
     for (int i = 0; i < MAX_POKEMONS; i++)
     {
         destrutor(pokemons[i]);
     }
-    
-    
+
     return 0;
 }
+

@@ -66,7 +66,23 @@ class mylist
         System.out.println("");
     }
 
-
+    public void inverter ()
+    {
+        Node current = head;
+        if(current.next == null)
+        {
+            System.out.println("");
+        }
+        else
+        {
+            Node tmp = head;
+            while(current.next != null)
+            {
+                current = current.next;
+            }
+            head = current;
+        }
+    }
     public static void main(String[] args)
     {
         mylist array = new mylist();
@@ -74,8 +90,12 @@ class mylist
         array.add(2);
         array.add(3);
         array.add(4);
-        array.print(); 
-        array.popback();
-        array.print();   
+        // array.print(); 
+        // array.popback();
+        array.print();  
+        array.inverter();
+        array.print();
+
+
     }
 }
